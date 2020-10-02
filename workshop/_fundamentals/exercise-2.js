@@ -7,10 +7,20 @@
 
 const combineArrays = (arr1, arr2) => {
   // Insert missing solution please
+  if (
+    !arr1.every((currentValue) => typeof currentValue == "string") ||
+    !arr2.every((currentValue) => typeof currentValue == "string")
+  ) {
+    return undefined;
+  }
+
+  const combinedArr = [...arr1, ...arr2];
+  const sortedArr = combinedArr.sort();
+  return sortedArr;
 };
 
 // 2. Do a console.log to verify your function.
-
+console.log(combineArrays(["crisp", "bacon"], ["zuchini", "apple"]));
 // 3. Test your function.
 // Look for the corresponding exercise file in the __tests__ folder.
 // Add some test cases in the test. The first one is done for you.

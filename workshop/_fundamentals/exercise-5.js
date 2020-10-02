@@ -8,9 +8,31 @@
 
 const getDaysInMonth = (month) => {
   // Insert missing solution please
+  switch (month) {
+    case "February":
+      return 28;
+    case "April":
+    case "June":
+    case "September":
+    case "November":
+      return 30;
+    case "January":
+    case "March":
+    case "May":
+    case "July":
+    case "August":
+    case "October":
+    case "December":
+      return 31;
+    default:
+      return "error";
+  }
 };
 
 // 2. Do a console.log to verify your function.
+console.log(getDaysInMonth(432));
+console.log(getDaysInMonth("April"));
+console.log(getDaysInMonth("Monday"));
 
 // 3. Test your function.
 // Look for the corresponding exercise file in the __tests__ folder.

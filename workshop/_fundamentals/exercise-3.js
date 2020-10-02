@@ -14,9 +14,16 @@ let foodPairings = {
 
 const getPairing = (key) => {
   // Insert missing solution please
+  if (typeof key !== "string") {
+    return "I didn't get that!";
+  }
+
+  let pairedFood = foodPairings[key];
+  return pairedFood;
 };
 
 // 2. Do a console.log to verify your function.
+console.log(getPairing("fish"));
 
 // 3. Test your function.
 // Look for the corresponding exercise file in the __tests__ folder.
