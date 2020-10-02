@@ -16,13 +16,13 @@ console.log("Exercise 2.4");
 
 let main = document.getElementById("main");
 main.style.textAlign = "center";
-main.style.padding = "20px";
-
-// window dimensions
-let intViewportWidth = window.innerWidth - 100;
-let intViewportHeight = window.innerHeight - 100;
+main.style.display = "flex";
+main.style.justifyContent = "center";
+main.style.flexDirection = "column";
+main.style.alignItems = "center";
 
 let topDiv = document.createElement("div");
+topDiv.style.height = "100px";
 main.appendChild(topDiv);
 
 let startButton = document.createElement("button");
@@ -31,28 +31,40 @@ startButton.style.border = "none";
 startButton.style.backgroundColor = "#5c5d5e";
 startButton.style.color = "white";
 startButton.style.padding = "20px";
+startButton.style.marginTop = "10px";
 startButton.style.borderRadius = "5px";
-startButton.style.fontSize = "3rem";
+startButton.style.fontSize = "2rem";
 startButton.style.fontFamily = "'Poppins', sans-serif";
 startButton.style.fontWeight = "bold";
 startButton.innerText = "Start";
 topDiv.appendChild(startButton);
 
-let gameInfo = document.createElement("div");
-let gameInfoText = document.createElement("p");
+let gameInfoText = document.createElement("button");
+gameInfoText.style.outline = "none";
+gameInfoText.style.border = "none";
+gameInfoText.style.backgroundColor = "#5c5d5e";
+gameInfoText.style.color = "white";
+gameInfoText.style.padding = "20px";
+gameInfoText.style.marginTop = "10px";
+gameInfoText.style.borderRadius = "5px";
 gameInfoText.style.fontSize = "2rem";
 gameInfoText.style.fontFamily = "'Poppins', sans-serif";
-gameInfoText.style.position = "absolute";
-gameInfoText.style.zIndex = "1000";
-gameInfoText.style.backgroundColor = "#white";
-gameInfoText.style.borderRadius = "3px";
-gameInfoText.style.color = "#5c0010";
-gameInfo.appendChild(gameInfoText);
-main.appendChild(gameInfo);
+gameInfoText.style.fontWeight = "bold";
+gameInfoText.style.display = "none";
+topDiv.appendChild(gameInfoText);
+
+let gameBox = document.createElement("div");
+gameBox.style.width = "800px";
+gameBox.style.height = "500px";
+gameBox.style.backgroundColor = "#F8F8FF";
+gameBox.style.position = "relative";
+gameBox.style.borderRadius = "5px";
+gameBox.style.border = "1px solid #708090";
+main.appendChild(gameBox);
 
 startButton.addEventListener("click", () => {
-  console.log("Start button clicked");
   startButton.style.display = "none";
+  gameInfoText.style.display = "block";
   generateRandomButtons();
 });
 
@@ -70,22 +82,22 @@ function generateRandomButtons() {
   if (randomTimeOut == 1) {
     addS = "";
   }
-  gameInfoText.innerHTML = `${randomTimeOut} second${addS}`;
+  gameInfoText.innerText = `${randomTimeOut} second${addS}`;
 
   // the loop that will generate the buttons
   for (let i = 1; i <= randomNumButtons; i++) {
     let redButton = document.createElement("button");
     redButton.className = "red-buttons";
     redButton.style.backgroundColor = "red";
-    redButton.style.left = `${Math.random() * intViewportWidth}px`;
-    redButton.style.top = `${Math.random() * intViewportHeight}px`;
+    redButton.style.left = `${Math.random() * 700}px`;
+    redButton.style.top = `${Math.random() * 400}px`;
     redButton.style.position = "absolute";
-    redButton.style.width = "100px";
-    redButton.style.height = "100px";
+    redButton.style.width = "60px";
+    redButton.style.height = "60px";
     redButton.style.borderRadius = "50%";
     redButton.style.outline = "none";
     redButton.style.color = "white";
-    redButton.style.fontSize = "3rem";
+    redButton.style.fontSize = "1rem";
     redButton.style.border = "none";
     redButton.style.cursor = "pointer";
     redButton.id = i;
@@ -97,7 +109,7 @@ function generateRandomButtons() {
     redButton.addEventListener("click", greenBackground);
 
     // append the buttons to the gaming board
-    gameInfo.appendChild(redButton);
+    gameBox.appendChild(redButton);
   }
 
   // timeout
@@ -109,8 +121,8 @@ function generateRandomButtons() {
     if (
       buttonArray.every((button) => button.style.backgroundColor == "green")
     ) {
-      console.log("You WON");
-
+      console.log("WON");
+      gameInfoText.style.backgroundColor = "green";
       gameInfoText.innerText = "CONGRATULATIONS!!! YOU WON!!!";
       for (let i = 0; i < buttonList.length; i++) {
         buttonList[i].removeEventListener("click", greenBackground);
@@ -118,8 +130,9 @@ function generateRandomButtons() {
 
       clearTimeout(timeOut);
     } else {
-      gameInfoText.innerText = "YOU LOST";
-      console.log("You LOST");
+      gameInfoText.style.backgroundColor = "red";
+      gameInfoText.innerText = "SORRY, YOU LOST!!!";
+      console.log("LOST");
       for (let i = 0; i < buttonList.length; i++) {
         buttonList[i].removeEventListener("click", greenBackground);
       }
