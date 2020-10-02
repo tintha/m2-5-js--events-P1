@@ -34,7 +34,6 @@ startButton.style.padding = "20px";
 startButton.style.marginTop = "10px";
 startButton.style.borderRadius = "5px";
 startButton.style.fontSize = "2rem";
-startButton.style.fontFamily = "'Poppins', sans-serif";
 startButton.style.fontWeight = "bold";
 startButton.innerText = "Start";
 topDiv.appendChild(startButton);
@@ -48,7 +47,6 @@ gameInfoText.style.padding = "20px";
 gameInfoText.style.marginTop = "10px";
 gameInfoText.style.borderRadius = "5px";
 gameInfoText.style.fontSize = "2rem";
-gameInfoText.style.fontFamily = "'Poppins', sans-serif";
 gameInfoText.style.fontWeight = "bold";
 gameInfoText.style.display = "none";
 topDiv.appendChild(gameInfoText);
@@ -71,18 +69,22 @@ startButton.addEventListener("click", () => {
 function generateRandomButtons() {
   // random timeout 1 to 10 seconds
   let randomTimeOut = Math.floor(Math.random() * 10) + 1;
-  console.log(`TimeOut ${randomTimeOut} sec`);
+  console.log(`TimeOut is ${randomTimeOut} sec`);
 
+  // countdown
+  const countdown = setInterval(function () {
+    gameInfoText.innerText = `sec`;
+    let secs = (randomTimeOut -= 1);
+    gameInfoText.innerText = `${secs}`;
+    if (secs <= 0) {
+      clearInterval(countdown);
+    }
+  }, 1000);
+
+  gameInfoText.innerText = randomTimeOut;
   // generate number between 1 and 20
   let randomNumButtons = Math.floor(Math.random() * (21 - 1) + 1);
-  console.log(randomNumButtons);
-
-  // display timeout and number of buttons
-  let addS = "s";
-  if (randomTimeOut == 1) {
-    addS = "";
-  }
-  gameInfoText.innerText = `${randomTimeOut} second${addS}`;
+  console.log(`${randomNumButtons} buttons`);
 
   // the loop that will generate the buttons
   for (let i = 1; i <= randomNumButtons; i++) {
@@ -123,7 +125,7 @@ function generateRandomButtons() {
     ) {
       console.log("WON");
       gameInfoText.style.backgroundColor = "green";
-      gameInfoText.innerText = "CONGRATULATIONS!!! YOU WON!!!";
+      gameInfoText.innerText = "CONGRATULATIONS!!! YOU WIN!!!";
       for (let i = 0; i < buttonList.length; i++) {
         buttonList[i].removeEventListener("click", greenBackground);
       }
@@ -131,7 +133,7 @@ function generateRandomButtons() {
       clearTimeout(timeOut);
     } else {
       gameInfoText.style.backgroundColor = "red";
-      gameInfoText.innerText = "SORRY, YOU LOST!!!";
+      gameInfoText.innerText = "SORRY, YOU LOSE!";
       console.log("LOST");
       for (let i = 0; i < buttonList.length; i++) {
         buttonList[i].removeEventListener("click", greenBackground);
